@@ -1,71 +1,17 @@
-## 🤖 AI Assistant Commit Guidelines
-All commits must follow **Conventional Commits** specification. This applies to all AI assistants (Claude, Gemini, etc.) contributing to this project.
+## TDD-Based Coding Style Guidelines for AI Assistants
 
-### Conventional Commit Format
-```
-<type>(<scope>): <subject>
+1. **Test-Driven Development (TDD)**: Always start by writing tests before the actual code. This ensures that the requirements are clear and that the code is directly aligned with what needs to be achieved.
 
-<body>
+2. **Simplicity First**: Write simple, straightforward tests. Avoid complex logic in tests to maintain clarity.
 
-<footer>
-```
+3. **Descriptive Names**: Use descriptive names for tests so that their purpose and the scenario they cover are immediately clear.
 
-### Types
-- **feat:** A new feature
-- **fix:** A bug fix
-- **docs:** Documentation only changes
-- **style:** Changes that don't affect code meaning (formatting, missing semicolons, etc.)
-- **refactor:** Code change that neither fixes a bug nor adds a feature
-- **perf:** Code change that improves performance
-- **test:** Adding missing tests or correcting existing tests
-- **chore:** Changes to build process, dependencies, or tooling
-- **ci:** Changes to CI/CD configuration
+4. **Aim for Isolation**: Tests should be isolated from one another. Use mocks and stubs where necessary to ensure that a test fails or passes based solely on the code being tested.
 
-### Scope
-The scope should specify the component or area being affected (e.g., `auth`, `transactions`, `categories`, `api`, `ui`).
+5. **Refactor with Confidence**: After passing tests, it's encouraged to refactor the code while keeping the tests green. This helps improve code quality without losing functionality.
 
-### Subject
-- Use imperative, present tense: "add" not "added" or "adds"
-- Don't capitalize first letter
-- No period (.) at the end
-- Limit to 50 characters
+6. **Continuous Integration**: Implement a continuous integration setup to run your test suite automatically on committing changes. This feedback loop is essential for maintaining code quality.
 
-### Body
-- Optional but recommended for non-trivial changes
-- Explain **what** and **why**, not **how**
-- Wrap at 72 characters
-- Separate from subject with a blank line
+7. **Document Edge Cases**: Always include tests for edge cases and unexpected inputs to ensure robust and fail-safe code.
 
-### Footer
-- Reference issues: `Closes #123` or `Fixes #456`
-- Breaking changes: `BREAKING CHANGE: description`
-
-### Examples
-```
-feat(auth): implement JWT token refresh mechanism
-
-Add automatic token refresh when tokens expire within 5 minutes.
-Implement refresh token rotation for improved security.
-
-Closes #42
-```
-
-```
-fix(transactions): correct category balance calculation
-
-The activity sum was not accounting for cleared transactions.
-Now only cleared transactions contribute to the category total.
-
-Fixes #89
-```
-
-```
-docs(readme): update setup instructions for PostgreSQL 15
-```
-
-```
-refactor(api): simplify transaction query logic
-
-Extract common filter logic into a shared utility function
-to reduce duplication across endpoints.
-```
+8. **Review & Iterate**: Regularly review TDD practices and iterate based on team feedback to keep improving coding standards.
