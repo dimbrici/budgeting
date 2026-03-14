@@ -1,50 +1,71 @@
-# Project: ZenBudget (Zero-Based Budgeting App)
+## 🤖 AI Assistant Commit Guidelines
+All commits must follow **Conventional Commits** specification. This applies to all AI assistants (Claude, Gemini, etc.) contributing to this project.
 
-## 🎯 Product Vision
-A high-performance, web-based budgeting tool inspired by YNAB. 
-**The Golden Rule:** Every dollar must have a job ($Total Assets = \sum Categories + Ready To Assign$).
+### Conventional Commit Format
+```
+<type>(<scope>): <subject>
 
-## 🛠️ Technical Stack
-- **Frontend:** Next.js (App Router), Tailwind CSS, Lucide Icons.
-- **Backend:** FastAPI (Python 3.11+).
-- **Database:** PostgreSQL (ACID compliant for financial integrity).
-- **ORM/Validation:** SQLModel (combines SQLAlchemy + Pydantic).
-- **Authentication:** JWT (JSON Web Tokens) via FastAPI OAuth2.
-- **Banking Integration:** Plaid API (for transaction syncing).
+<body>
 
-## 🗄️ Database Schema & Data Models
-### Accounts
-- `id`: UUID (Primary Key)
-- `name`: String (e.g., "Main Checking")
-- `type`: Enum (Checking, Savings, Credit Card)
-- `balance`: Decimal (12, 2)
-- `is_on_budget`: Boolean (Determines if funds contribute to 'Ready to Assign')
+<footer>
+```
 
-### Categories
-- `id`: UUID
-- `name`: String
-- `group`: String (e.g., "Fixed Expenses", "Fun Money")
-- `assigned`: Decimal (Amount user manually allocated this month)
-- `activity`: Decimal (Automated sum of transactions this month)
-- `available`: Calculated field (`assigned` + `activity`)
+### Types
+- **feat:** A new feature
+- **fix:** A bug fix
+- **docs:** Documentation only changes
+- **style:** Changes that don't affect code meaning (formatting, missing semicolons, etc.)
+- **refactor:** Code change that neither fixes a bug nor adds a feature
+- **perf:** Code change that improves performance
+- **test:** Adding missing tests or correcting existing tests
+- **chore:** Changes to build process, dependencies, or tooling
+- **ci:** Changes to CI/CD configuration
 
-### Transactions
-- `id`: UUID
-- `date`: Date
-- `payee`: String
-- `amount`: Decimal (Negative for spending, Positive for income)
-- `category_id`: UUID (Foreign Key)
-- `account_id`: UUID (Foreign Key)
-- `cleared`: Boolean
+### Scope
+The scope should specify the component or area being affected (e.g., `auth`, `transactions`, `categories`, `api`, `ui`).
 
-## ⚙️ Business Logic Rules (For Gemini Code Assist)
-1. **Zero-Based Logic:** 'Ready to Assign' must always reflect the total liquid cash not yet placed in a category.
-2. **Negative Carrying:** If a category is overspent (Available < 0), the 'Ready to Assign' for the *following* month must be reduced by that amount.
-3. **Transaction Flow:** Every transaction must update the `activity` field of its linked Category and the `balance` of its linked Account simultaneously.
-4. **API First:** All frontend actions must communicate via FastAPI endpoints; no direct database manipulation from the UI.
+### Subject
+- Use imperative, present tense: "add" not "added" or "adds"
+- Don't capitalize first letter
+- No period (.) at the end
+- Limit to 50 characters
 
-## 📂 Project Directory Structure
-- `/backend`: FastAPI source code, routers, and models.
-- `/frontend`: Next.js components, hooks, and state management.
-- `/migrations`: Alembic database migration files.
-- `/docs`: API documentation and user flow diagrams.
+### Body
+- Optional but recommended for non-trivial changes
+- Explain **what** and **why**, not **how**
+- Wrap at 72 characters
+- Separate from subject with a blank line
+
+### Footer
+- Reference issues: `Closes #123` or `Fixes #456`
+- Breaking changes: `BREAKING CHANGE: description`
+
+### Examples
+```
+feat(auth): implement JWT token refresh mechanism
+
+Add automatic token refresh when tokens expire within 5 minutes.
+Implement refresh token rotation for improved security.
+
+Closes #42
+```
+
+```
+fix(transactions): correct category balance calculation
+
+The activity sum was not accounting for cleared transactions.
+Now only cleared transactions contribute to the category total.
+
+Fixes #89
+```
+
+```
+docs(readme): update setup instructions for PostgreSQL 15
+```
+
+```
+refactor(api): simplify transaction query logic
+
+Extract common filter logic into a shared utility function
+to reduce duplication across endpoints.
+```
